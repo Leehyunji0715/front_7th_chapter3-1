@@ -1,10 +1,5 @@
 @import 'tailwindcss';
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 /* Button styles */
 .btn {
   display: inline-block;
@@ -212,65 +207,6 @@
 
 .card-body {
   padding: 20px;
-}
-
-/* Badge styles */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-family: Arial, sans-serif;
-  line-height: 1;
-  white-space: nowrap;
-  border-radius: 3px;
-}
-
-.badge-pill {
-  border-radius: 10px;
-}
-
-.badge-primary {
-  background-color: #1976d2;
-  color: #fff;
-}
-.badge-secondary {
-  background-color: #757575;
-  color: #fff;
-}
-.badge-success {
-  background-color: #388e3c;
-  color: #fff;
-}
-.badge-danger {
-  background-color: #d32f2f;
-  color: #fff;
-}
-.badge-warning {
-  background-color: #f57c00;
-  color: #fff;
-}
-.badge-info {
-  background-color: #0288d1;
-  color: #fff;
-}
-
-.badge-small {
-  padding: 0px 4px;
-  font-size: 0.625rem;
-  height: 16px;
-}
-
-.badge-medium {
-  padding: 0px 8px;
-  font-size: 0.75rem;
-  height: 20px;
-}
-
-.badge-large {
-  padding: 0px 10px;
-  font-size: 0.8125rem;
-  height: 24px;
 }
 
 /* Alert styles */
