@@ -5,8 +5,6 @@ interface BadgeProps {
   type?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
   size?: 'small' | 'medium' | 'large';
   pill?: boolean;
-  paymentStatus?: 'paid' | 'pending' | 'failed' | 'refunded';
-  showIcon?: boolean;
 }
 
 export const Badge: React.FC<BadgeProps> = ({
@@ -14,9 +12,7 @@ export const Badge: React.FC<BadgeProps> = ({
   type = 'primary',
   size = 'medium',
   pill = false,
-  showIcon = false,
 }) => {
-  void showIcon; // <-- 안 쓰는듯?
   const classes = ['badge', `badge-${type}`, `badge-${size}`, pill && 'badge-pill']
     .filter(Boolean)
     .join(' ');
