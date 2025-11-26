@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../atoms/Button';
-import { StatusBadge, UserRoleBadge, CategoryBadge, UserStatusBadge } from '../molecules';
+import { Badge } from '../ui/badge';
 
 interface Column {
   key: string;
@@ -29,6 +29,114 @@ interface TableProps {
   onArchive?: (id: number) => void;
   onRestore?: (id: number) => void;
 }
+
+// Badge 헬퍼 함수들
+const getUserRoleText = (
+  userRole: 'admin' | 'moderator' | 'user' | 'guest'
+) => {
+  switch (userRole) {
+    case 'admin':
+      return '관리자';
+    case 'moderator':
+      return '운영자';
+    case 'user':
+      return '사용자';
+    case 'guest':
+      return '게스트';
+    default:
+      return '';
+  }
+};
+
+const getUserRoleVariant = (
+  userRole: 'admin' | 'moderator' | 'user' | 'guest'
+) => {
+  switch (userRole) {
+    case 'admin':
+      return 'danger';
+    case 'moderator':
+      return 'warning';
+    case 'user':
+      return 'primary';
+    case 'guest':
+      return 'secondary';
+    default:
+      return 'primary';
+  }
+};
+
+const getStatusText = (status: string) => {
+  switch (status) {
+    case 'published':
+      return '게시됨';
+    case 'draft':
+      return '임시저장';
+    case 'archived':
+      return '보관됨';
+    case 'pending':
+      return '대기중';
+    case 'rejected':
+      return '거부됨';
+    default:
+      return '';
+  }
+};
+
+const getStatusVariant = (status: string) => {
+  switch (status) {
+    case 'published':
+      return 'success' as const;
+    case 'draft':
+      return 'warning' as const;
+    case 'archived':
+      return 'secondary' as const;
+    case 'pending':
+      return 'info' as const;
+    case 'rejected':
+      return 'danger' as const;
+    default:
+      return 'primary' as const;
+  }
+};
+
+const getUserStatusText = (status: string) => {
+  switch (status) {
+    case 'active':
+      return '활성';
+    case 'inactive':
+      return '비활성';
+    case 'suspended':
+      return '정지';
+    default:
+      return '';
+  }
+};
+
+const getUserStatusVariant = (status: string) => {
+  switch (status) {
+    case 'active':
+      return 'success' as const;
+    case 'inactive':
+      return 'warning' as const;
+    case 'suspended':
+      return 'danger' as const;
+    default:
+      return 'danger' as const;
+  }
+};
+
+const getCategoryVariant = (category: string) => {
+  switch (category) {
+    case 'development':
+      return 'primary' as const;
+    case 'design':
+      return 'info' as const;
+    case 'accessibility':
+      return 'danger' as const;
+    default:
+      return 'secondary' as const;
+  }
+};
 
 export const Table: React.FC<TableProps> = ({
   columns,
@@ -60,7 +168,8 @@ export const Table: React.FC<TableProps> = ({
   const handleSort = (columnKey: string) => {
     if (!sortable) return;
 
-    const newDirection = sortColumn === columnKey && sortDirection === 'asc' ? 'desc' : 'asc';
+    const newDirection =
+      sortColumn === columnKey && sortDirection === 'asc' ? 'desc' : 'asc';
     setSortColumn(columnKey);
     setSortDirection(newDirection);
 
@@ -89,7 +198,10 @@ export const Table: React.FC<TableProps> = ({
         )
       : tableData;
 
-  const paginatedData = filteredData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   const totalPages = Math.ceil(filteredData.length / pageSize);
 
@@ -105,7 +217,11 @@ export const Table: React.FC<TableProps> = ({
   const actualColumns =
     columns ||
     (tableData[0]
-      ? Object.keys(tableData[0]).map(key => ({ key, header: key, width: undefined }))
+      ? Object.keys(tableData[0]).map(key => ({
+          key,
+          header: key,
+          width: undefined,
+        }))
       : []);
 
   // 🚨 Bad Practice: Table 컴포넌트가 도메인별 렌더링 로직을 알고 있음
@@ -115,10 +231,18 @@ export const Table: React.FC<TableProps> = ({
     // 도메인별 특수 렌더링
     if (entityType === 'user') {
       if (columnKey === 'role') {
-        return <UserRoleBadge userRole={value} />;
+        return (
+          <Badge variant={getUserRoleVariant(value)} size='medium'>
+            {getUserRoleText(value)}
+          </Badge>
+        );
       }
       if (columnKey === 'status') {
-        return <UserStatusBadge status={value} />;
+        return (
+          <Badge variant={getUserStatusVariant(value)} size='medium'>
+            {getUserStatusText(value)}
+          </Badge>
+        );
       }
       if (columnKey === 'lastLogin') {
         return value || '-';
@@ -129,7 +253,11 @@ export const Table: React.FC<TableProps> = ({
             <Button size='sm' variant='primary' onClick={() => onEdit?.(row)}>
               수정
             </Button>
-            <Button size='sm' variant='danger' onClick={() => onDelete?.(row.id)}>
+            <Button
+              size='sm'
+              variant='danger'
+              onClick={() => onDelete?.(row.id)}
+            >
               삭제
             </Button>
           </div>
@@ -139,10 +267,18 @@ export const Table: React.FC<TableProps> = ({
 
     if (entityType === 'post') {
       if (columnKey === 'category') {
-        return <CategoryBadge category={value} />;
+        return (
+          <Badge variant={getCategoryVariant(value)} pill>
+            {value}
+          </Badge>
+        );
       }
       if (columnKey === 'status') {
-        return <StatusBadge status={value} />;
+        return (
+          <Badge variant={getStatusVariant(value)} size='medium'>
+            {getStatusText(value)}
+          </Badge>
+        );
       }
       if (columnKey === 'views') {
         return value?.toLocaleString() || '0';
@@ -154,21 +290,37 @@ export const Table: React.FC<TableProps> = ({
               수정
             </Button>
             {row.status === 'draft' && (
-              <Button size='sm' variant='success' onClick={() => onPublish?.(row.id)}>
+              <Button
+                size='sm'
+                variant='success'
+                onClick={() => onPublish?.(row.id)}
+              >
                 게시
               </Button>
             )}
             {row.status === 'published' && (
-              <Button size='sm' variant='secondary' onClick={() => onArchive?.(row.id)}>
+              <Button
+                size='sm'
+                variant='secondary'
+                onClick={() => onArchive?.(row.id)}
+              >
                 보관
               </Button>
             )}
             {row.status === 'archived' && (
-              <Button size='sm' variant='primary' onClick={() => onRestore?.(row.id)}>
+              <Button
+                size='sm'
+                variant='primary'
+                onClick={() => onRestore?.(row.id)}
+              >
                 복원
               </Button>
             )}
-            <Button size='sm' variant='danger' onClick={() => onDelete?.(row.id)}>
+            <Button
+              size='sm'
+              variant='danger'
+              onClick={() => onDelete?.(row.id)}
+            >
               삭제
             </Button>
           </div>
