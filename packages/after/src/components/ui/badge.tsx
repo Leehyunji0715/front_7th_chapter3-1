@@ -24,7 +24,7 @@ import { cn } from '@/lib/utils';
 // );
 
 const badgeVariants = cva(
-  'inline-flex items-center justify-center font-bold font-sans leading-none whitespace-nowrap',
+  'inline-flex items-center border px-2 py-0.5 justify-center font-bold font-sans leading-none whitespace-nowrap',
   {
     variants: {
       variant: {
