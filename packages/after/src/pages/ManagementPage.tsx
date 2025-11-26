@@ -1,64 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { /*Alert,*/ Modal } from '../components/organisms';
+import { Modal } from '../components/organisms';
+import { UserTable, PostTable } from '../components/tables';
 import { FormInput, FormSelect, FormTextarea } from '../components/molecules';
-import { userService } from '../services/userService';
-import { postService } from '../services/postService';
 import type { User } from '../services/userService';
 import type { Post } from '../services/postService';
-import '../styles/components.css';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { useUser } from '@/hooks/useUser';
+import { usePosts } from '@/hooks/usePosts';
+import '../styles/components.css';
 
 type EntityType = 'user' | 'post';
 type Entity = User | Post;
 
-const getStatusVariant = (status: string) => {
-  switch (status) {
-    case 'published':
-      return 'success' as const;
-    case 'draft':
-      return 'warning' as const;
-    case 'archived':
-      return 'secondary' as const;
-    case 'pending':
-      return 'info' as const;
-    case 'rejected':
-      return 'danger' as const;
-    default:
-      return 'primary' as const;
-  }
-};
-
-const getStatusText = (status: string) => {
-  switch (status) {
-    case 'published':
-      return '게시됨';
-    case 'draft':
-      return '임시저장';
-    case 'archived':
-      return '보관됨';
-    case 'pending':
-      return '대기중';
-    case 'rejected':
-      return '거부됨';
-    default:
-      return '';
-  }
-};
-
 export const ManagementPage: React.FC = () => {
   const [entityType, setEntityType] = useState<EntityType>('post');
-  const [users, setUsers] = useState<User[]>([]);
-  const [posts, setPosts] = useState<Post[]>([]);
+  const {
+    users,
+    loadUsers,
+    createUser,
+    updateUser,
+    deleteUser,
+    // alertMessage: userAlertMessage,
+    // errorMessage: userErrorMessage,
+    // showErrorAlert: showUserErrorAlert,
+  } = useUser();
+  const {
+    posts,
+    // alertMessage: postAlertMessage,
+    // errorMessage: postErrorMessage,
+    // showErrorAlert: showPostErrorAlert,
+    loadPosts,
+    createPost,
+    updatePost,
+    deletePost,
+    handleStatusPost,
+  } = usePosts();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Entity | null>(null);
@@ -81,45 +58,12 @@ export const ManagementPage: React.FC = () => {
     setSelectedItem(null);
   }, [entityType]);
 
-  const loadUsers = async () => {
-    try {
-      const result: User[] = await userService.getAll();
-      setUsers(result);
-    } catch (error: any) {
-      setErrorMessage('데이터를 불러오는데 실패했습니다');
-      setShowErrorAlert(true);
-    }
-  };
-
-  const loadPosts = async () => {
-    try {
-      const result: Post[] = await postService.getAll();
-      setPosts(result);
-    } catch (error: any) {
-      setErrorMessage('데이터를 불러오는데 실패했습니다');
-      setShowErrorAlert(true);
-    }
-  };
-
   const handleCreate = async () => {
     try {
       if (entityType === 'user') {
-        await userService.create({
-          username: formData.username,
-          email: formData.email,
-          role: formData.role || 'user',
-          status: formData.status || 'active',
-        });
-        await loadUsers();
+        await createUser(formData as User);
       } else {
-        await postService.create({
-          title: formData.title,
-          content: formData.content || '',
-          author: formData.author,
-          category: formData.category,
-          status: formData.status || 'draft',
-        });
-        await loadPosts();
+        await createPost(formData as Post);
       }
       setIsCreateModalOpen(false);
       setFormData({});
@@ -163,11 +107,9 @@ export const ManagementPage: React.FC = () => {
 
     try {
       if (entityType === 'user') {
-        await userService.update(selectedItem.id, formData);
-        await loadUsers();
+        await updateUser(selectedItem.id, formData as User);
       } else {
-        await postService.update(selectedItem.id, formData);
-        await loadPosts();
+        await updatePost(selectedItem.id, formData as Post);
       }
 
       setIsEditModalOpen(false);
@@ -188,14 +130,10 @@ export const ManagementPage: React.FC = () => {
 
     try {
       if (entityType === 'user') {
-        await userService.delete(id);
-        await loadUsers();
+        await deleteUser(id);
       } else {
-        await postService.delete(id);
-        await loadPosts();
+        await deletePost(id);
       }
-
-      setAlertMessage('삭제되었습니다');
       setShowSuccessAlert(true);
     } catch (error: any) {
       setErrorMessage(error.message || '삭제에 실패했습니다');
@@ -210,15 +148,7 @@ export const ManagementPage: React.FC = () => {
     if (entityType !== 'post') return;
 
     try {
-      if (action === 'publish') {
-        await postService.publish(id);
-      } else if (action === 'archive') {
-        await postService.archive(id);
-      } else if (action === 'restore') {
-        await postService.restore(id);
-      }
-
-      await loadPosts();
+      await handleStatusPost(id, action);
       const message =
         action === 'publish' ? '게시' : action === 'archive' ? '보관' : '복원';
       setAlertMessage(`${message}되었습니다`);
@@ -278,33 +208,6 @@ export const ManagementPage: React.FC = () => {
           color: '#1976d2',
         },
       };
-    }
-  };
-
-  // 🚨 Table 컴포넌트에 로직을 위임하여 간소화
-  const renderTableColumns = () => {
-    if (entityType === 'user') {
-      return [
-        { key: 'id', header: 'ID', width: '60px' },
-        { key: 'username', header: '사용자명', width: '150px' },
-        { key: 'email', header: '이메일' },
-        { key: 'role', header: '역할', width: '120px' },
-        { key: 'status', header: '상태', width: '120px' },
-        { key: 'createdAt', header: '생성일', width: '120px' },
-        { key: 'lastLogin', header: '마지막 로그인', width: '140px' },
-        { key: 'actions', header: '관리', width: '200px' },
-      ];
-    } else {
-      return [
-        { key: 'id', header: 'ID', width: '60px' },
-        { key: 'title', header: '제목' },
-        { key: 'author', header: '작성자', width: '120px' },
-        { key: 'category', header: '카테고리', width: '140px' },
-        { key: 'status', header: '상태', width: '120px' },
-        { key: 'views', header: '조회수', width: '100px' },
-        { key: 'createdAt', header: '작성일', width: '120px' },
-        { key: 'actions', header: '관리', width: '250px' },
-      ];
     }
   };
 
@@ -556,125 +459,20 @@ export const ManagementPage: React.FC = () => {
               </div>
             </div>
 
-            <Table className='table-container table overflow-auto border border-gray-300'>
-              <TableHeader>
-                <TableRow>
-                  {renderTableColumns().map(col => (
-                    <TableHead
-                      key={col.key}
-                      style={{ width: col.width || 'auto' }}
-                    >
-                      {col.header}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {entityType === 'user'
-                  ? users.map(user => (
-                      <TableRow key={user.id}>
-                        <TableCell>{user.id}</TableCell>
-                        <TableCell>{user.username}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>{user.role}</TableCell>
-                        <TableCell>{user.status}</TableCell>
-                        <TableCell>{user.createdAt}</TableCell>
-                        <TableCell>{user.lastLogin ?? ''}</TableCell>
-                        <TableCell>
-                          <div style={{ display: 'flex', gap: '8px' }}>
-                            <Button
-                              size='sm'
-                              variant='primary'
-                              onClick={() => handleEdit(user)}
-                            >
-                              수정
-                            </Button>
-                            <Button
-                              size='sm'
-                              variant='danger'
-                              onClick={() => handleDelete(user.id)}
-                            >
-                              삭제
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  : posts.map(post => (
-                      <TableRow key={post.id}>
-                        <TableCell>{post.id}</TableCell>
-                        <TableCell>{post.title}</TableCell>
-                        <TableCell>{post.author}</TableCell>
-                        <TableCell>{post.category}</TableCell>
-                        <TableCell>
-                          <Badge variant={getStatusVariant(post.status)}>
-                            {getStatusText(post.status)}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{post.views}</TableCell>
-                        <TableCell>{post.createdAt}</TableCell>
-                        <TableCell>
-                          {/* Actions like Edit, Delete can go here */}
-                          <div
-                            style={{
-                              display: 'flex',
-                              gap: '8px',
-                              flexWrap: 'wrap',
-                            }}
-                          >
-                            <Button
-                              size='sm'
-                              variant='primary'
-                              onClick={() => handleEdit(post)}
-                            >
-                              수정
-                            </Button>
-                            {post.status === 'draft' && (
-                              <Button
-                                size='sm'
-                                variant='success'
-                                onClick={() =>
-                                  handleStatusAction(post.id, 'publish')
-                                }
-                              >
-                                게시
-                              </Button>
-                            )}
-                            {post.status === 'published' && (
-                              <Button
-                                size='sm'
-                                variant='secondary'
-                                onClick={() =>
-                                  handleStatusAction(post.id, 'archive')
-                                }
-                              >
-                                보관
-                              </Button>
-                            )}
-                            {post.status === 'archived' && (
-                              <Button
-                                size='sm'
-                                variant='primary'
-                                onClick={() =>
-                                  handleStatusAction(post.id, 'restore')
-                                }
-                              >
-                                복원
-                              </Button>
-                            )}
-                            <Button
-                              size='sm'
-                              variant='danger'
-                              onClick={() => handleDelete(post.id)}
-                            >
-                              삭제
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-              </TableBody>
-            </Table>
+            {entityType === 'user' ? (
+              <UserTable
+                users={users}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ) : (
+              <PostTable
+                posts={posts}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                onStatusAction={handleStatusAction}
+              />
+            )}
           </div>
         </div>
       </div>

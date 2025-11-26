@@ -347,7 +347,7 @@
 }
 
 /* Table styles */
-/* .table-container {
+.table-container {
   overflow-x: auto;
 }
 
@@ -399,7 +399,7 @@
 
 .table-hover tbody tr:hover {
   background-color: rgba(0, 0, 0, 0.04);
-} */
+}
 
 /* Modal styles */
 .modal-overlay {
