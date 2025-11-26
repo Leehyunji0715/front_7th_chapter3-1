@@ -13,27 +13,35 @@ describe('ManagementPage - User Management', () => {
     render(<ManagementPage />);
 
     // 사용자 탭으로 전환
-    const userTab = screen.getByRole('button', { name: '사용자' });
+    const userTab = await screen.findByText('사용자');
     await user.click(userTab);
 
     // === 생성 ===
-    const createButton = screen.getByRole('button', { name: '새로 만들기' });
+    const createButton = await screen.findByText('새로 만들기');
     await user.click(createButton);
 
     // name으로 input과 select 직접 찾기
     await waitFor(() => {
-      expect(document.querySelector('input[name="username"]')).toBeInTheDocument();
+      expect(
+        document.querySelector('input[name="username"]')
+      ).toBeInTheDocument();
     });
 
-    const usernameInput = document.querySelector('input[name="username"]') as HTMLInputElement;
-    const emailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
-    const roleSelect = document.querySelector('select[name="role"]') as HTMLSelectElement;
+    const usernameInput = document.querySelector(
+      'input[name="username"]'
+    ) as HTMLInputElement;
+    const emailInput = document.querySelector(
+      'input[name="email"]'
+    ) as HTMLInputElement;
+    const roleSelect = document.querySelector(
+      'select[name="role"]'
+    ) as HTMLSelectElement;
 
     await user.type(usernameInput, 'testuser');
     await user.type(emailInput, 'test@example.com');
     await user.selectOptions(roleSelect, 'user');
 
-    const createBtn = screen.getByRole('button', { name: '생성' });
+    const createBtn = await screen.findByText('생성');
     await user.click(createBtn);
 
     // 생성 확인
@@ -51,11 +59,13 @@ describe('ManagementPage - User Management', () => {
       expect(document.querySelector('input[name="email"]')).toBeInTheDocument();
     });
 
-    const emailInputEdit = document.querySelector('input[name="email"]') as HTMLInputElement;
+    const emailInputEdit = document.querySelector(
+      'input[name="email"]'
+    ) as HTMLInputElement;
     await user.clear(emailInputEdit);
     await user.type(emailInputEdit, 'updated@example.com');
 
-    const updateBtn = screen.getByRole('button', { name: '수정 완료' });
+    const updateBtn = await screen.findByText('수정 완료');
     await user.click(updateBtn);
 
     // 수정 확인
@@ -66,7 +76,9 @@ describe('ManagementPage - User Management', () => {
 
     // === 삭제 ===
     // 마지막 삭제 버튼 선택
-    const deleteButtons = await screen.findAllByRole('button', { name: /삭제/i });
+    const deleteButtons = await screen.findAllByRole('button', {
+      name: /삭제/i,
+    });
     await user.click(deleteButtons[deleteButtons.length - 1]);
 
     // 삭제 확인
@@ -87,7 +99,7 @@ describe('ManagementPage - Post Management', () => {
 
     // 게시글 탭이 기본 선택되어 있는지 확인
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: '게시글' })).toBeInTheDocument();
+      expect(screen.getByText('게시글')).toBeInTheDocument();
     });
 
     // 기존 샘플 게시글이 표시되는지 확인
