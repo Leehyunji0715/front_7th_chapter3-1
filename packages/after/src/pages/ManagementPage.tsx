@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Modal } from '../components/organisms';
+import { /*Alert,*/ Modal } from '../components/organisms';
 import { FormInput, FormSelect, FormTextarea } from '../components/molecules';
 import { userService } from '../services/userService';
 import { postService } from '../services/postService';
@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 type EntityType = 'user' | 'post';
 type Entity = User | Post;
@@ -390,22 +391,19 @@ export const ManagementPage: React.FC = () => {
               <div style={{ marginBottom: '10px' }}>
                 <Alert
                   variant='success'
-                  title='성공'
                   onClose={() => setShowSuccessAlert(false)}
                 >
-                  {alertMessage}
+                  <AlertTitle>성공</AlertTitle>
+                  <AlertDescription>{alertMessage}</AlertDescription>
                 </Alert>
               </div>
             )}
 
             {showErrorAlert && (
               <div style={{ marginBottom: '10px' }}>
-                <Alert
-                  variant='error'
-                  title='오류'
-                  onClose={() => setShowErrorAlert(false)}
-                >
-                  {errorMessage}
+                <Alert variant='error' onClose={() => setShowErrorAlert(false)}>
+                  <AlertTitle>오류</AlertTitle>
+                  <AlertDescription>{errorMessage}</AlertDescription>
                 </Alert>
               </div>
             )}
@@ -677,19 +675,6 @@ export const ManagementPage: React.FC = () => {
                     ))}
               </TableBody>
             </Table>
-
-            {/* <Table
-                columns={renderTableColumns()}
-                data={data}
-                striped
-                hover
-                entityType={entityType}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                onPublish={id => handleStatusAction(id, 'publish')}
-                onArchive={id => handleStatusAction(id, 'archive')}
-                onRestore={id => handleStatusAction(id, 'restore')}
-              /> */}
           </div>
         </div>
       </div>
