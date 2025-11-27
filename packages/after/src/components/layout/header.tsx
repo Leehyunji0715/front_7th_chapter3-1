@@ -9,7 +9,6 @@ export const Header: React.FC = () => {
         boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
         position: 'sticky',
         top: 0,
-        zIndex: 1000,
       }}
     >
       <div
