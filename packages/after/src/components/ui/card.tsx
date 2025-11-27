@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 // TODO: shadow, color 토큰 등을 shadcn/ui 스타일 가이드에 맞게 재정의
-const cardVariants = cva('rounded-md mb-4 overflow-hidden bg-white font-sans', {
+const cardVariants = cva('rounded-md overflow-hidden bg-white font-sans', {
   variants: {
     variant: {
       default:
