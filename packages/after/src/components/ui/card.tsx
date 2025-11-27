@@ -4,21 +4,24 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 // TODO: shadow, color 토큰 등을 shadcn/ui 스타일 가이드에 맞게 재정의
-const cardVariants = cva('rounded-md overflow-hidden bg-white font-sans', {
-  variants: {
-    variant: {
-      default:
-        'border border-[rgba(0,0,0,0.12)] shadow-[0px_2px_1px_-1px_rgba(0,0,0,0.2),0px_1px_1px_0px_rgba(0,0,0,0.14),0px_1px_3px_0px_rgba(0,0,0,0.12)]',
-      bordered: 'border border-[rgba(0,0,0,0.12)] shadow-none',
-      elevated:
-        'border border-[rgba(0,0,0,0.08)] shadow-[0px_2px_4px_-1px_rgba(0,0,0,0.12),0px_1px_2px_0px_rgba(0,0,0,0.08),0px_1px_4px_0px_rgba(0,0,0,0.08)]',
-      flat: 'border border-[rgba(0,0,0,0.08)] shadow-none bg-[#fafafa]',
+const cardVariants = cva(
+  'py-4 rounded-md overflow-hidden bg-white font-sans space-y-4',
+  {
+    variants: {
+      variant: {
+        default:
+          'border border-[rgba(0,0,0,0.12)] shadow-[0px_2px_1px_-1px_rgba(0,0,0,0.2),0px_1px_1px_0px_rgba(0,0,0,0.14),0px_1px_3px_0px_rgba(0,0,0,0.12)]',
+        bordered: 'border border-[rgba(0,0,0,0.12)] shadow-none',
+        elevated:
+          'border border-[rgba(0,0,0,0.08)] shadow-[0px_2px_4px_-1px_rgba(0,0,0,0.12),0px_1px_2px_0px_rgba(0,0,0,0.08),0px_1px_4px_0px_rgba(0,0,0,0.08)]',
+        flat: 'border border-[rgba(0,0,0,0.08)] shadow-none bg-[#fafafa]',
+      },
     },
-  },
-  defaultVariants: {
-    variant: 'default',
-  },
-});
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
 
 function Card({
   className,
