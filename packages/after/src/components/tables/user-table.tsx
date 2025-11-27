@@ -37,10 +37,7 @@ export const UserTable: React.FC<UserTableProps> = ({
       <TableHeader>
         <TableRow>
           {columns.map(col => (
-            <TableHead
-              key={col.key}
-              style={{ width: col.width || 'auto' }}
-            >
+            <TableHead key={col.key} style={{ width: col.width || 'auto' }}>
               {col.header}
             </TableHead>
           ))}

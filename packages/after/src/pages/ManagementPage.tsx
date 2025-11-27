@@ -7,8 +7,8 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { StatsCard } from '@/components/card';
 import { useUser } from '@/hooks/useUser';
 import { usePosts } from '@/hooks/usePosts';
-import { UserForm } from '@/components/form/UserForm';
-import { PostForm, type PostFormData } from '@/components/form/PostForm';
+import { UserForm } from '@/components/form/user-form';
+import { PostForm, type PostFormData } from '@/components/form/post-form';
 import '../styles/components.css';
 import {
   Dialog,

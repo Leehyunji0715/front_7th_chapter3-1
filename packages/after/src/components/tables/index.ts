@@ -1,2 +1,2 @@
-export { UserTable } from './UserTable';
-export { PostTable } from './PostTable';
+export { UserTable } from './user-table';
+export { PostTable } from './post-table';
