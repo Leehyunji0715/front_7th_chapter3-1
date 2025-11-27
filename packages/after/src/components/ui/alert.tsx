@@ -4,15 +4,19 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border px-4 py-3 text-sm [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
+  'relative w-full rounded-lg border px-4 py-3 text-sm transition-colors [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
   {
     variants: {
       variant: {
-        info: 'bg-[#e3f2fd] border-[#90caf9] text-[#0d47a1]',
-        success: 'bg-[#e8f5e9] border-[#81c784] text-[#1b5e20]',
-        warning: 'bg-[#fff3e0] border-[#ffb74d] text-[#e65100]',
-        error: 'bg-[#ffebee] border-[#e57373] text-[#b71c1c]',
-        default: 'bg-[#f5f5f5] border-[#bdbdbd] text-[#424242]',
+        info: 'bg-[var(--bg-info)] border-[var(--border-info)] text-[var(--text-info)]',
+        success:
+          'bg-[var(--bg-success)] border-[var(--border-success)] text-[var(--text-success)]',
+        warning:
+          'bg-[var(--bg-warning)] border-[var(--border-warning)] text-[var(--text-warning)]',
+        error:
+          'bg-[var(--bg-error)] border-[var(--border-error)] text-[var(--text-error)]',
+        default:
+          'bg-[var(--bg-neutral)] border-[var(--border-neutral)] text-[var(--text-body)]',
       },
     },
     defaultVariants: {

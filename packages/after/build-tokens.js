@@ -35,6 +35,7 @@ const config = {
     'src/tokens/components/stats-card.json',
     'src/tokens/components/badge.json',
     'src/tokens/components/button.json',
+    'src/tokens/components/alert.json',
   ],
   platforms: {
     css: {
