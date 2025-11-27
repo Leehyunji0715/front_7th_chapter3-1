@@ -89,8 +89,17 @@
   background-color: #fff;
 }
 
+.dark .table {
+  border: 1px solid #111827;
+  background-color: #111827;
+}
+
 .table thead {
   background-color: #fafafa;
+}
+
+.dark .table thead {
+  background-color: #1f2937;
 }
 
 .table th {
@@ -104,10 +113,20 @@
   border-bottom: 2px solid rgba(0, 0, 0, 0.12);
 }
 
+.dark .table th {
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
 .table td {
   padding: 16px;
   color: rgba(0, 0, 0, 0.87);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .table td {
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .table tbody tr:last-child td {
@@ -118,8 +137,16 @@
   background-color: #fafafa;
 }
 
+.dark .table-striped tbody tr:nth-child(even) {
+  background-color: #1f2937;
+}
+
 .table-bordered {
   border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.dark .table-bordered {
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .table-bordered th,
@@ -127,8 +154,17 @@
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
+.dark .table-bordered th,
+.dark .table-bordered td {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .table-hover tbody tr:hover {
   background-color: rgba(0, 0, 0, 0.04);
+}
+
+.dark .table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 @theme inline {

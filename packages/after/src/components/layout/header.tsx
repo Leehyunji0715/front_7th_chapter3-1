@@ -1,123 +1,42 @@
 import React from 'react';
+import { ThemeToggle } from '../ui/theme-toggle';
 
 export const Header: React.FC = () => {
   return (
-    <header
-      style={{
-        backgroundColor: '#ffffff',
-        borderBottom: '1px solid #e5e7eb',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-        position: 'sticky',
-        top: 0,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          padding: '0 24px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: '64px',
-        }}
-      >
+    <header className='sticky top-0 border-b border-gray-200 bg-white shadow-sm transition-colors dark:border-gray-700 dark:bg-gray-800'>
+      <div className='mx-auto flex h-16 max-w-7xl items-center justify-between px-6'>
         {/* Logo */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-          }}
-        >
-          <div
-            style={{
-              width: '40px',
-              height: '40px',
-              backgroundColor: '#007bff',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#ffffff',
-              fontWeight: 'bold',
-              fontSize: '20px',
-            }}
-          >
+        <div className='flex items-center gap-3'>
+          <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500 text-xl font-bold text-white'>
             L
           </div>
           <div>
-            <h1
-              style={{
-                fontSize: '18px',
-                fontWeight: '700',
-                color: '#1a202c',
-                margin: 0,
-                lineHeight: 1,
-              }}
-            >
+            <h1 className='text-lg font-bold text-gray-900 dark:text-white'>
               Hanghae Company
             </h1>
-            <p
-              style={{
-                fontSize: '11px',
-                color: '#718096',
-                margin: 0,
-                lineHeight: 1,
-                marginTop: '2px',
-              }}
-            >
+            <p className='text-xs text-gray-500 dark:text-gray-400'>
               Design System Migration Project
             </p>
           </div>
         </div>
 
-        {/* User Info */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-          }}
-        >
-          <div
-            style={{
-              textAlign: 'right',
-            }}
-          >
-            <div
-              style={{
-                fontSize: '14px',
-                fontWeight: '600',
-                color: '#1a202c',
-              }}
-            >
-              Demo User
+        {/* Right Section */}
+        <div className='flex items-center gap-3'>
+          <ThemeToggle />
+
+          {/* User Info */}
+          <div className='flex items-center gap-3'>
+            <div className='text-right'>
+              <div className='text-sm font-semibold text-gray-900 dark:text-white'>
+                Demo User
+              </div>
+              <div className='text-xs text-gray-500 dark:text-gray-400'>
+                demo@example.com
+              </div>
             </div>
-            <div
-              style={{
-                fontSize: '12px',
-                color: '#718096',
-              }}
-            >
-              demo@example.com
+            <div className='flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 font-semibold text-blue-500 dark:bg-blue-900 dark:text-blue-300'>
+              DU
             </div>
-          </div>
-          <div
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              backgroundColor: '#e3f2fd',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#007bff',
-              fontWeight: '600',
-              fontSize: '16px',
-            }}
-          >
-            DU
           </div>
         </div>
       </div>

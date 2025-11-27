@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { UserTable, PostTable } from '../components/tables';
 import type { User } from '../services/userService';
 import type { Post } from '../services/postService';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { Card, CardContent } from '@/components/ui/card';
 import { StatsCard } from '@/components/card';
 import { useUser } from '@/hooks/useUser';
 import { usePosts } from '@/hooks/usePosts';
@@ -208,15 +210,15 @@ export const ManagementPage: React.FC = () => {
   const stats = getStats();
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f0f0f0' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
+    <div className='min-h-screen bg-gray-50 dark:bg-gray-950'>
+      <div className='mx-auto max-w-6xl p-5'>
         <div style={{ marginBottom: '20px' }}>
           <h1
+            className='text-gray-900 dark:text-white'
             style={{
               fontSize: '24px',
               fontWeight: 'bold',
               marginBottom: '5px',
-              color: '#333',
             }}
           >
             관리 시스템
@@ -226,96 +228,96 @@ export const ManagementPage: React.FC = () => {
           </p>
         </div>
 
-        <div
-          className='flex flex-col gap-4 bg-white p-3'
-          style={{
-            border: '1px solid #ddd',
-          }}
-        >
-          <div className='flex gap-2 border-b-1 pb-2'>
-            <Button
-              variant={entityType === 'post' ? 'primary' : 'secondary'}
-              onClick={() => setEntityType('post')}
-            >
-              게시글
-            </Button>
-            <Button
-              variant={entityType === 'user' ? 'primary' : 'secondary'}
-              onClick={() => setEntityType('user')}
-            >
-              사용자
-            </Button>
-          </div>
-          <div className='flex flex-col gap-3'>
-            <div className='text-right'>
+        <Card className='border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'>
+          <CardContent className='flex flex-col gap-4 p-6'>
+            <div className='flex gap-2 border-b-1 pb-2'>
               <Button
-                variant='primary'
-                size='md'
-                onClick={() => setIsCreateModalOpen(true)}
+                variant={entityType === 'post' ? 'primary' : 'secondary'}
+                onClick={() => setEntityType('post')}
               >
-                새로 만들기
+                게시글
+              </Button>
+              <Button
+                variant={entityType === 'user' ? 'primary' : 'secondary'}
+                onClick={() => setEntityType('user')}
+              >
+                사용자
               </Button>
             </div>
-
-            {showSuccessAlert && (
-              <div style={{ marginBottom: '10px' }}>
-                <Alert
-                  variant='success'
-                  onClose={() => setShowSuccessAlert(false)}
+            <div className='flex flex-col gap-3'>
+              <div className='text-right'>
+                <Button
+                  variant='primary'
+                  size='md'
+                  onClick={() => setIsCreateModalOpen(true)}
                 >
-                  <AlertTitle>성공</AlertTitle>
-                  <AlertDescription>{alertMessage}</AlertDescription>
-                </Alert>
+                  새로 만들기
+                </Button>
               </div>
-            )}
 
-            {showErrorAlert && (
-              <div style={{ marginBottom: '10px' }}>
-                <Alert variant='error' onClose={() => setShowErrorAlert(false)}>
-                  <AlertTitle>오류</AlertTitle>
-                  <AlertDescription>{errorMessage}</AlertDescription>
-                </Alert>
+              {showSuccessAlert && (
+                <div style={{ marginBottom: '10px' }}>
+                  <Alert
+                    variant='success'
+                    onClose={() => setShowSuccessAlert(false)}
+                  >
+                    <AlertTitle>성공</AlertTitle>
+                    <AlertDescription>{alertMessage}</AlertDescription>
+                  </Alert>
+                </div>
+              )}
+
+              {showErrorAlert && (
+                <div style={{ marginBottom: '10px' }}>
+                  <Alert
+                    variant='error'
+                    onClose={() => setShowErrorAlert(false)}
+                  >
+                    <AlertTitle>오류</AlertTitle>
+                    <AlertDescription>{errorMessage}</AlertDescription>
+                  </Alert>
+                </div>
+              )}
+              <div className='mb-2 grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-2'>
+                <StatsCard variant='primary' label='전체' value={stats.total} />
+                <StatsCard
+                  variant='success'
+                  label={stats.stat1.label}
+                  value={stats.stat1.value}
+                />
+                <StatsCard
+                  variant='warning'
+                  label={stats.stat2.label}
+                  value={stats.stat2.value}
+                />
+                <StatsCard
+                  variant='error'
+                  label={stats.stat3.label}
+                  value={stats.stat3.value}
+                />
+                <StatsCard
+                  variant='secondary'
+                  label={stats.stat4.label}
+                  value={stats.stat4.value}
+                />
               </div>
-            )}
-            <div className='mb-2 grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-2'>
-              <StatsCard variant='primary' label='전체' value={stats.total} />
-              <StatsCard
-                variant='success'
-                label={stats.stat1.label}
-                value={stats.stat1.value}
-              />
-              <StatsCard
-                variant='warning'
-                label={stats.stat2.label}
-                value={stats.stat2.value}
-              />
-              <StatsCard
-                variant='error'
-                label={stats.stat3.label}
-                value={stats.stat3.value}
-              />
-              <StatsCard
-                variant='secondary'
-                label={stats.stat4.label}
-                value={stats.stat4.value}
-              />
+              {entityType === 'user' ? (
+                <UserTable
+                  users={users}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              ) : (
+                <PostTable
+                  posts={posts}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  onStatusAction={handleStatusAction}
+                />
+              )}
             </div>
-            {entityType === 'user' ? (
-              <UserTable
-                users={users}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            ) : (
-              <PostTable
-                posts={posts}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                onStatusAction={handleStatusAction}
-              />
-            )}
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
       <Dialog
         open={isCreateModalOpen}

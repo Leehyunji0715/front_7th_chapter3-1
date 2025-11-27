@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 // TODO: shadow, color 토큰 등을 shadcn/ui 스타일 가이드에 맞게 재정의
 const cardVariants = cva(
-  'py-4 rounded-md overflow-hidden bg-white font-sans space-y-4',
+  'rounded-md overflow-hidden bg-white font-sans space-y-4',
   {
     variants: {
       variant: {
