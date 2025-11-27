@@ -34,6 +34,7 @@ const config = {
     'src/tokens/semantic.json',
     'src/tokens/components/stats-card.json',
     'src/tokens/components/badge.json',
+    'src/tokens/components/button.json',
   ],
   platforms: {
     css: {
@@ -117,6 +118,7 @@ const updateComponentsCSS = () => {
 // 메인 실행
 const main = async () => {
   const sd = new StyleDictionary(config);
+  sd.log.verbosity = 'verbose';
   await sd.buildAllPlatforms();
 
   console.log('📦 Updating components.css...');

@@ -7,7 +7,7 @@ import './styles/components.css';
 export const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <div className='min-h-screen bg-gray-50 transition-colors dark:bg-gray-900'>
+      <div className='min-h-screen bg-gray-50 transition-colors dark:bg-gray-950'>
         <Header />
         <main>
           <ManagementPage />

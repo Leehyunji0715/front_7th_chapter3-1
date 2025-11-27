@@ -2,19 +2,19 @@
   "badge": {
     "background": {
       "default": { "value": "var(--bg-neutral)" },
-      "primary": { "value": "var(--icon-primary)" },
-      "success": { "value": "var(--icon-success)" },
-      "warning": { "value": "var(--icon-warning)" },
-      "error": { "value": "var(--icon-error)" },
-      "info": { "value": "var(--icon-info)" }
+      "primary": { "value": "var(--badge-bg-primary)" },
+      "success": { "value": "var(--badge-bg-success)" },
+      "warning": { "value": "var(--badge-bg-warning)" },
+      "error": { "value": "var(--badge-bg-error)" },
+      "info": { "value": "var(--badge-bg-info)" }
     },
     "text": {
-      "default": { "value": "{color.black}" },
-      "primary": { "value": "{color.white}" },
-      "success": { "value": "{color.white}" },
-      "warning": { "value": "{color.white}" },
-      "error": { "value": "{color.white}" },
-      "info": { "value": "{color.white}" }
+      "default": { "value": "var(--text-neutral)" },
+      "primary": { "value": "var(--text-body)" },
+      "success": { "value": "var(--text-body)" },
+      "warning": { "value": "var(--text-body)" },
+      "error": { "value": "var(--text-body)" },
+      "info": { "value": "var(--text-body)" }
     },
     "border": {
       "default": { "value": "var(--border-neutral)" },

@@ -41,14 +41,18 @@ import { cn } from '@/lib/utils';
 // );
 
 const buttonVariants = cva(
-  'inline-block font-sans font-normal leading-6 rounded cursor-pointer border border-solid whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed',
+  'inline-block font-sans font-normal leading-6 rounded cursor-pointer border border-solid whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed transition-colors',
   {
     variants: {
       variant: {
-        primary: 'bg-[#1976d2] text-white border-[#1565c0] hover:bg-[#1565c0]',
-        secondary: 'bg-[#f5f5f5] text-[#333] border-[#ddd] hover:bg-[#e0e0e0]',
-        danger: 'bg-[#d32f2f] text-white border-[#c62828] hover:bg-[#c62828]',
-        success: 'bg-[#388e3c] text-white border-[#2e7d32] hover:bg-[#2e7d32]',
+        primary:
+          'bg-[var(--bg-primary)] text-[var(--text-body)] border-[var(--border-primary)] hover:bg-[var(--icon-primary)]',
+        secondary:
+          'bg-[var(--bg-neutral)] text-[var(--text-body)] border-[var(--border-neutral)] hover:bg-[var(--icon-neutral)]',
+        danger:
+          'bg-[var(--bg-error)] text-[var(--text-body)] border-[var(--border-error)] hover:bg-[var(--icon-error)]',
+        success:
+          'bg-[var(--bg-success)] text-[var(--text-body)] border-[var(--border-success)] hover:bg-[var(--icon-success)]',
       },
       size: {
         sm: 'py-1.5 px-3 text-[13px]',

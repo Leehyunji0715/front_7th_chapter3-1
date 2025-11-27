@@ -3,7 +3,7 @@ import { ThemeToggle } from '../ui/theme-toggle';
 
 export const Header: React.FC = () => {
   return (
-    <header className='sticky top-0 border-b border-gray-200 bg-white shadow-sm transition-colors dark:border-gray-700 dark:bg-gray-800'>
+    <header className='sticky top-0 border-b border-gray-200 bg-white shadow-sm transition-colors dark:border-gray-700 dark:bg-gray-950'>
       <div className='mx-auto flex h-16 max-w-7xl items-center justify-between px-6'>
         {/* Logo */}
         <div className='flex items-center gap-3'>

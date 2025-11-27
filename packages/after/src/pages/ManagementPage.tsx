@@ -228,7 +228,7 @@ export const ManagementPage: React.FC = () => {
           </p>
         </div>
 
-        <Card className='border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'>
+        <Card className='border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950'>
           <CardContent className='flex flex-col gap-4 p-6'>
             <div className='flex gap-2 border-b-1 pb-2'>
               <Button
