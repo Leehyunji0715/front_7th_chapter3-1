@@ -17,7 +17,7 @@ export const usePosts = () => {
     }
   };
 
-  const createPost = async (post: Post) => {
+  const createPost = async (post: Omit<Post, 'id' | 'createdAt' | 'views'>) => {
     try {
       await postService.create({
         title: post.title,

@@ -17,7 +17,7 @@ export const useUser = () => {
     }
   };
 
-  const createUser = async (user: User) => {
+  const createUser = async (user: Omit<User, 'id' | 'createdAt'>) => {
     try {
       await userService.create({
         username: user.username,
