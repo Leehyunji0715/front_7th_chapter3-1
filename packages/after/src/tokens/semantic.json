@@ -1,0 +1,67 @@
+{
+  "light": {
+    "bg-primary": { "value": "{color.blue.50}" },
+    "bg-success": { "value": "{color.green.50}" },
+    "bg-warning": { "value": "{color.yellow.50}" },
+    "bg-error": { "value": "{color.red.50}" },
+    "bg-info": { "value": "{color.lightBlue.50}" },
+    "bg-neutral": { "value": "{color.gray.50}" },
+    "bg-surface": { "value": "{color.white}" },
+
+    "text-primary": { "value": "{color.blue.700}" },
+    "text-success": { "value": "{color.green.700}" },
+    "text-warning": { "value": "{color.yellow.700}" },
+    "text-error": { "value": "{color.red.700}" },
+    "text-info": { "value": "{color.lightBlue.700}" },
+    "text-neutral": { "value": "{color.gray.700}" },
+    "text-body": { "value": "{color.gray.900}" },
+    "text-muted": { "value": "{color.gray.500}" },
+
+    "border-primary": { "value": "{color.blue.300}" },
+    "border-success": { "value": "{color.green.300}" },
+    "border-warning": { "value": "{color.yellow.300}" },
+    "border-error": { "value": "{color.red.300}" },
+    "border-info": { "value": "{color.lightBlue.300}" },
+    "border-neutral": { "value": "{color.gray.300}" },
+
+    "icon-primary": { "value": "{color.blue.500}" },
+    "icon-success": { "value": "{color.green.500}" },
+    "icon-warning": { "value": "{color.yellow.500}" },
+    "icon-error": { "value": "{color.red.500}" },
+    "icon-info": { "value": "{color.lightBlue.500}" },
+    "icon-neutral": { "value": "{color.gray.500}" }
+  },
+
+  "dark": {
+    "bg-primary": { "value": "{color.blue.900}" },
+    "bg-success": { "value": "{color.green.900}" },
+    "bg-warning": { "value": "{color.yellow.900}" },
+    "bg-error": { "value": "{color.red.900}" },
+    "bg-info": { "value": "{color.lightBlue.900}" },
+    "bg-neutral": { "value": "{color.gray.900}" },
+    "bg-surface": { "value": "{color.black}" },
+
+    "text-primary": { "value": "{color.blue.300}" },
+    "text-success": { "value": "{color.green.300}" },
+    "text-warning": { "value": "{color.yellow.300}" },
+    "text-error": { "value": "{color.red.300}" },
+    "text-info": { "value": "{color.lightBlue.300}" },
+    "text-neutral": { "value": "{color.gray.300}" },
+    "text-body": { "value": "{color.white}" },
+    "text-muted": { "value": "{color.gray.400}" },
+
+    "border-primary": { "value": "{color.blue.700}" },
+    "border-success": { "value": "{color.green.700}" },
+    "border-warning": { "value": "{color.yellow.700}" },
+    "border-error": { "value": "{color.red.700}" },
+    "border-info": { "value": "{color.lightBlue.700}" },
+    "border-neutral": { "value": "{color.gray.700}" },
+
+    "icon-primary": { "value": "{color.blue.300}" },
+    "icon-success": { "value": "{color.green.300}" },
+    "icon-warning": { "value": "{color.yellow.300}" },
+    "icon-error": { "value": "{color.red.300}" },
+    "icon-info": { "value": "{color.lightBlue.300}" },
+    "icon-neutral": { "value": "{color.gray.400}" }
+  }
+}

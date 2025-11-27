@@ -95,6 +95,8 @@ const getRoleVariant = (category: 'admin' | 'moderator' | 'user') => {
       return 'warning';
     case 'user':
       return 'primary';
+    default:
+      return null;
   }
 };
 

@@ -1,0 +1,35 @@
+{
+  "statsCard": {
+    "background": {
+      "primary": { "value": "var(--bg-primary)" },
+      "success": { "value": "var(--bg-success)" },
+      "warning": { "value": "var(--bg-warning)" },
+      "error": { "value": "var(--bg-error)" },
+      "secondary": { "value": "var(--bg-neutral)" },
+      "info": { "value": "var(--bg-info)" }
+    },
+    "border": {
+      "primary": { "value": "var(--border-primary)" },
+      "success": { "value": "var(--border-success)" },
+      "warning": { "value": "var(--border-warning)" },
+      "error": { "value": "var(--border-error)" },
+      "secondary": { "value": "var(--border-neutral)" },
+      "info": { "value": "var(--border-info)" }
+    },
+    "text": {
+      "primary": { "value": "var(--text-primary)" },
+      "success": { "value": "var(--text-success)" },
+      "warning": { "value": "var(--text-warning)" },
+      "error": { "value": "var(--text-error)" },
+      "secondary": { "value": "var(--text-neutral)" },
+      "info": { "value": "var(--text-info)" },
+      "label": { "value": "var(--text-muted)" }
+    },
+    "spacing": {
+      "padding": { "value": "0.75rem" }
+    },
+    "radius": {
+      "default": { "value": "0.1875rem" }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --stats-card-background-primary: var(--bg-primary);
+  --stats-card-background-success: var(--bg-success);
+  --stats-card-background-warning: var(--bg-warning);
+  --stats-card-background-error: var(--bg-error);
+  --stats-card-background-secondary: var(--bg-neutral);
+  --stats-card-background-info: var(--bg-info);
+  --stats-card-border-primary: var(--border-primary);
+  --stats-card-border-success: var(--border-success);
+  --stats-card-border-warning: var(--border-warning);
+  --stats-card-border-error: var(--border-error);
+  --stats-card-border-secondary: var(--border-neutral);
+  --stats-card-border-info: var(--border-info);
+  --stats-card-text-primary: var(--text-primary);
+  --stats-card-text-success: var(--text-success);
+  --stats-card-text-warning: var(--text-warning);
+  --stats-card-text-error: var(--text-error);
+  --stats-card-text-secondary: var(--text-neutral);
+  --stats-card-text-info: var(--text-info);
+  --stats-card-text-label: var(--text-muted);
+  --stats-card-spacing-padding: 0.75rem;
+  --stats-card-radius-default: 0.1875rem;
+  --badge-background-default: var(--bg-neutral);
+  --badge-background-primary: var(--icon-primary);
+  --badge-background-success: var(--icon-success);
+  --badge-background-warning: var(--icon-warning);
+  --badge-background-error: var(--icon-error);
+  --badge-background-info: var(--icon-info);
+  --badge-text-default: #121212;
+  --badge-text-primary: #ffffff;
+  --badge-text-success: #ffffff;
+  --badge-text-warning: #ffffff;
+  --badge-text-error: #ffffff;
+  --badge-text-info: #ffffff;
+  --badge-border-default: var(--border-neutral);
+  --badge-border-primary: var(--border-primary);
+  --badge-border-success: var(--border-success);
+  --badge-border-warning: var(--border-warning);
+  --badge-border-error: var(--border-error);
+  --badge-border-info: var(--border-info);
+  --badge-padding-x: 0.5rem;
+  --badge-padding-y: 0.25rem;
+  --badge-radius-default: 0.25rem;
+  --badge-font-size: 0.75rem;
+  --badge-font-weight: 500;
+}

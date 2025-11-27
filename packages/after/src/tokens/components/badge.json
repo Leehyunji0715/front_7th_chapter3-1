@@ -1,0 +1,39 @@
+{
+  "badge": {
+    "background": {
+      "default": { "value": "var(--bg-neutral)" },
+      "primary": { "value": "var(--icon-primary)" },
+      "success": { "value": "var(--icon-success)" },
+      "warning": { "value": "var(--icon-warning)" },
+      "error": { "value": "var(--icon-error)" },
+      "info": { "value": "var(--icon-info)" }
+    },
+    "text": {
+      "default": { "value": "{color.black}" },
+      "primary": { "value": "{color.white}" },
+      "success": { "value": "{color.white}" },
+      "warning": { "value": "{color.white}" },
+      "error": { "value": "{color.white}" },
+      "info": { "value": "{color.white}" }
+    },
+    "border": {
+      "default": { "value": "var(--border-neutral)" },
+      "primary": { "value": "var(--border-primary)" },
+      "success": { "value": "var(--border-success)" },
+      "warning": { "value": "var(--border-warning)" },
+      "error": { "value": "var(--border-error)" },
+      "info": { "value": "var(--border-info)" }
+    },
+    "padding": {
+      "x": { "value": "0.5rem" },
+      "y": { "value": "0.25rem" }
+    },
+    "radius": {
+      "default": { "value": "0.25rem" }
+    },
+    "font": {
+      "size": { "value": "0.75rem" },
+      "weight": { "value": "500" }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "source": [
+    "src/tokens/palette.json",
+    "src/tokens/semantic.json",
+    "src/tokens/component/stats-card.json"
+  ],
+  "platforms": {
+    "css": {
+      "transformGroup": "css",
+      "buildPath": "src/styles/",
+      "files": [
+        {
+          "destination": "semantic-light.css",
+          "format": "css/variables",
+          "filter": {
+            "filePath": "src/tokens/semantic.json",
+            "attributes": {
+              "category": "light"
+            }
+          },
+          "options": {
+            "selector": ":root",
+            "outputReferences": true
+          }
+        },
+        {
+          "destination": "semantic-dark.css",
+          "format": "css/variables",
+          "filter": {
+            "filePath": "src/tokens/semantic.json",
+            "attributes": {
+              "category": "dark"
+            }
+          },
+          "options": {
+            "selector": "[data-theme='dark']",
+            "outputReferences": true
+          }
+        },
+        {
+          "destination": "component-tokens.css",
+          "format": "css/variables",
+          "filter": {
+            "filePath": "src/tokens/stats-card.json"
+          }
+        }
+      ]
+    }
+  }
+}

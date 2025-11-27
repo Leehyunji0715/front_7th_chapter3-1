@@ -4,22 +4,29 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardTitle } from '../ui/card';
 
-const statsCardVariants = cva('p-3 px-3', {
-  variants: {
-    variant: {
-      primary: 'bg-[#e3f2fd] border-[#90caf9] [&_.stats-value]:text-[#1976d2]',
-      success: 'bg-[#e8f5e9] border-[#81c784] [&_.stats-value]:text-[#388e3c]',
-      warning: 'bg-[#fff3e0] border-[#ffb74d] [&_.stats-value]:text-[#f57c00]',
-      error: 'bg-[#ffebee] border-[#e57373] [&_.stats-value]:text-[#d32f2f]',
-      secondary:
-        'bg-[#f5f5f5] border-[#bdbdbd] [&_.stats-value]:text-[#424242]',
-      info: 'bg-[#e1f5fe] border-[#4fc3f7] [&_.stats-value]:text-[#0288d1]',
+const statsCardVariants = cva(
+  'p-[var(--stats-card-spacing-padding)] border rounded-[var(--stats-card-radius-default)]',
+  {
+    variants: {
+      variant: {
+        primary:
+          'bg-[var(--stats-card-background-primary)] border-[var(--stats-card-border-primary)] [&_.stats-value]:text-[var(--stats-card-text-primary)]',
+        success:
+          'bg-[var(--stats-card-background-success)] border-[var(--stats-card-border-success)] [&_.stats-value]:text-[var(--stats-card-text-success)]',
+        warning:
+          'bg-[var(--stats-card-background-warning)] border-[var(--stats-card-border-warning)] [&_.stats-value]:text-[var(--stats-card-text-warning)]',
+        error:
+          'bg-[var(--stats-card-background-error)] border-[var(--stats-card-border-error)] [&_.stats-value]:text-[var(--stats-card-text-error)]',
+        secondary:
+          'bg-[var(--stats-card-background-secondary)] border-[var(--stats-card-border-secondary)] [&_.stats-value]:text-[var(--stats-card-text-secondary)]',
+        info: 'bg-[var(--stats-card-background-info)] border-[var(--stats-card-border-info)] [&_.stats-value]:text-[var(--stats-card-text-info)]',
+      },
     },
-  },
-  defaultVariants: {
-    variant: 'primary',
-  },
-});
+    defaultVariants: {
+      variant: 'primary',
+    },
+  }
+);
 
 interface StatsCardProps
   extends Omit<React.ComponentProps<typeof Card>, 'variant'>,
@@ -38,10 +45,16 @@ function StatsCard({
   return (
     <Card
       variant='bordered'
-      className={cn(statsCardVariants({ variant }), 'rounded-[3px]', className)}
+      className={cn(
+        statsCardVariants({ variant }),
+        'rounded-[var(--stats-card-radius-default)]',
+        className
+      )}
       {...props}
     >
-      <CardTitle className='text-sm text-[#666]'>{label}</CardTitle>
+      <CardTitle className='text-sm text-[var(--stats-card-text-label)]'>
+        {label}
+      </CardTitle>
       <CardContent className='px-0'>
         <div className='stats-value text-2xl leading-tight font-bold'>
           {value}

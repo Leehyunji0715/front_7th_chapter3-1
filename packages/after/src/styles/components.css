@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+@import './semantic-light.css';
+@import './semantic-dark.css';
+@import './component-tokens.css';
 
 @custom-variant dark (&:is(.dark *));
 
