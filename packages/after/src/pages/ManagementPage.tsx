@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Modal } from '../components/organisms';
 import { UserTable, PostTable } from '../components/tables';
 import type { User } from '../services/userService';
 import type { Post } from '../services/postService';
@@ -11,6 +10,13 @@ import { usePosts } from '@/hooks/usePosts';
 import { UserForm } from '@/components/form/UserForm';
 import { PostForm, type PostFormData } from '@/components/form/PostForm';
 import '../styles/components.css';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 type EntityType = 'user' | 'post';
 type Entity = User | Post;
@@ -311,17 +317,20 @@ export const ManagementPage: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <Modal
-        isOpen={isCreateModalOpen}
-        onClose={() => {
-          setIsCreateModalOpen(false);
-        }}
-        title={`새 ${entityType === 'user' ? '사용자' : '게시글'} 만들기`}
-        size='large'
-        showFooter
-        footerContent={
-          <>
+      <Dialog
+        open={isCreateModalOpen}
+        onOpenChange={open => setIsCreateModalOpen(open)}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{`새 ${entityType === 'user' ? '사용자' : '게시글'} 만들기`}</DialogTitle>
+          </DialogHeader>
+          {entityType === 'user' ? (
+            <UserForm onSubmit={handleCreateUser} />
+          ) : (
+            <PostForm onSubmit={handleCreatePost} />
+          )}
+          <DialogFooter>
             <Button
               variant='secondary'
               size='md'
@@ -336,29 +345,35 @@ export const ManagementPage: React.FC = () => {
             >
               생성
             </Button>
-          </>
-        }
-      >
-        <div>
-          {entityType === 'user' ? (
-            <UserForm onSubmit={handleCreateUser} />
-          ) : (
-            <PostForm onSubmit={handleCreatePost} />
-          )}
-        </div>
-      </Modal>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
-      <Modal
-        isOpen={isEditModalOpen}
-        onClose={() => {
-          setIsEditModalOpen(false);
-          setSelectedItem(null);
+      <Dialog
+        open={isEditModalOpen}
+        onOpenChange={open => {
+          setIsEditModalOpen(open);
+          if (!open) {
+            setSelectedItem(null);
+          }
         }}
-        title={`${entityType === 'user' ? '사용자' : '게시글'} 수정`}
-        size='large'
-        showFooter
-        footerContent={
-          <>
+      >
+        <DialogContent>
+          <DialogHeader>{`${entityType === 'user' ? '사용자' : '게시글'} 수정`}</DialogHeader>
+          {selectedItem && (
+            <Alert variant='info' className='mb-3'>
+              ID: {selectedItem.id} | 생성일: {selectedItem.createdAt}
+              {entityType === 'post' &&
+                ` | 조회수: ${(selectedItem as Post).views}`}
+            </Alert>
+          )}
+
+          {entityType === 'user' ? (
+            <UserForm data={selectedItem as User} onSubmit={handleUpdateUser} />
+          ) : (
+            <PostForm data={selectedItem as Post} onSubmit={handleUpdatePost} />
+          )}
+          <DialogFooter>
             <Button
               variant='secondary'
               size='md'
@@ -377,25 +392,9 @@ export const ManagementPage: React.FC = () => {
             >
               수정 완료
             </Button>
-          </>
-        }
-      >
-        <div>
-          {selectedItem && (
-            <Alert variant='info' className='mb-3'>
-              ID: {selectedItem.id} | 생성일: {selectedItem.createdAt}
-              {entityType === 'post' &&
-                ` | 조회수: ${(selectedItem as Post).views}`}
-            </Alert>
-          )}
-
-          {entityType === 'user' ? (
-            <UserForm data={selectedItem as User} onSubmit={handleUpdateUser} />
-          ) : (
-            <PostForm data={selectedItem as Post} onSubmit={handleUpdatePost} />
-          )}
-        </div>
-      </Modal>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
