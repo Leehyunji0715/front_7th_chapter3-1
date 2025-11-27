@@ -99,7 +99,7 @@ export const UserForm = ({ data, onSubmit }: Props) => {
                       관리자
                     </NativeSelectOption>
                     <NativeSelectOption value='moderator'>
-                      중재자
+                      운영자
                     </NativeSelectOption>
                   </NativeSelect>
                 </FormControl>

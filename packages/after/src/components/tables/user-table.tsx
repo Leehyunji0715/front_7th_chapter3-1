@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import type { User } from '@/services/userService';
+import { Badge } from '../ui/badge';
 
 interface UserTableProps {
   users: User[];
@@ -49,8 +50,16 @@ export const UserTable: React.FC<UserTableProps> = ({
             <TableCell>{user.id}</TableCell>
             <TableCell>{user.username}</TableCell>
             <TableCell>{user.email}</TableCell>
-            <TableCell>{user.role}</TableCell>
-            <TableCell>{user.status}</TableCell>
+            <TableCell>
+              <Badge variant={getRoleVariant(user.role)}>
+                {getRoleText(user.role)}
+              </Badge>
+            </TableCell>
+            <TableCell>
+              <Badge variant={getStatusVariant(user.status)}>
+                {getStatusText(user.status)}
+              </Badge>
+            </TableCell>
             <TableCell>{user.createdAt}</TableCell>
             <TableCell>{user.lastLogin ?? ''}</TableCell>
             <TableCell>
@@ -76,4 +85,50 @@ export const UserTable: React.FC<UserTableProps> = ({
       </TableBody>
     </Table>
   );
+};
+
+const getRoleVariant = (category: 'admin' | 'moderator' | 'user') => {
+  switch (category) {
+    case 'admin':
+      return 'danger';
+    case 'moderator':
+      return 'warning';
+    case 'user':
+      return 'primary';
+  }
+};
+
+const getRoleText = (category: 'admin' | 'moderator' | 'user') => {
+  switch (category) {
+    case 'admin':
+      return '관리자';
+    case 'moderator':
+      return '운영자';
+    case 'user':
+      return '사용지';
+  }
+};
+
+const getStatusVariant = (status: 'active' | 'inactive' | 'suspended') => {
+  switch (status) {
+    case 'active':
+      return 'success';
+    case 'inactive':
+      return 'warning';
+    case 'suspended':
+      return 'danger';
+  }
+};
+
+const getStatusText = (status: 'active' | 'inactive' | 'suspended') => {
+  switch (status) {
+    case 'active':
+      return '게시됨';
+    case 'inactive':
+      return '임시저장';
+    case 'suspended':
+      return '거부됨';
+    default:
+      return '';
+  }
 };

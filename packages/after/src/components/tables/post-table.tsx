@@ -15,42 +15,11 @@ interface PostTableProps {
   posts: Post[];
   onEdit: (post: Post) => void;
   onDelete: (id: number) => void;
-  onStatusAction: (id: number, action: 'publish' | 'archive' | 'restore') => void;
+  onStatusAction: (
+    id: number,
+    action: 'publish' | 'archive' | 'restore'
+  ) => void;
 }
-
-const getStatusVariant = (status: string) => {
-  switch (status) {
-    case 'published':
-      return 'success';
-    case 'draft':
-      return 'warning';
-    case 'archived':
-      return 'secondary';
-    case 'pending':
-      return 'info';
-    case 'rejected':
-      return 'danger';
-    default:
-      return 'primary';
-  }
-};
-
-const getStatusText = (status: string) => {
-  switch (status) {
-    case 'published':
-      return '게시됨';
-    case 'draft':
-      return '임시저장';
-    case 'archived':
-      return '보관됨';
-    case 'pending':
-      return '대기중';
-    case 'rejected':
-      return '거부됨';
-    default:
-      return '';
-  }
-};
 
 const columns = [
   { key: 'id', header: 'ID', width: '60px' },
@@ -74,10 +43,7 @@ export const PostTable: React.FC<PostTableProps> = ({
       <TableHeader>
         <TableRow>
           {columns.map(col => (
-            <TableHead
-              key={col.key}
-              style={{ width: col.width || 'auto' }}
-            >
+            <TableHead key={col.key} style={{ width: col.width || 'auto' }}>
               {col.header}
             </TableHead>
           ))}
@@ -89,7 +55,11 @@ export const PostTable: React.FC<PostTableProps> = ({
             <TableCell>{post.id}</TableCell>
             <TableCell>{post.title}</TableCell>
             <TableCell>{post.author}</TableCell>
-            <TableCell>{post.category}</TableCell>
+            <TableCell>
+              <Badge pill variant={getCategoryVariant(post.category)}>
+                {getCategoryText(post.category)}
+              </Badge>
+            </TableCell>
             <TableCell>
               <Badge variant={getStatusVariant(post.status)}>
                 {getStatusText(post.status)}
@@ -153,4 +123,64 @@ export const PostTable: React.FC<PostTableProps> = ({
       </TableBody>
     </Table>
   );
+};
+
+const getCategoryVariant = (
+  category: 'development' | 'design' | 'accessibility'
+) => {
+  switch (category) {
+    case 'development':
+      return 'primary';
+    case 'design':
+      return 'info';
+    case 'accessibility':
+      return 'danger';
+  }
+};
+
+const getCategoryText = (
+  category: 'development' | 'design' | 'accessibility'
+) => {
+  switch (category) {
+    case 'development':
+      return 'Development';
+    case 'design':
+      return 'Design';
+    case 'accessibility':
+      return 'Accessibility';
+  }
+};
+
+const getStatusVariant = (status: string) => {
+  switch (status) {
+    case 'published':
+      return 'success';
+    case 'draft':
+      return 'warning';
+    case 'archived':
+      return 'secondary';
+    case 'pending':
+      return 'info';
+    case 'rejected':
+      return 'danger';
+    default:
+      return 'primary';
+  }
+};
+
+const getStatusText = (status: string) => {
+  switch (status) {
+    case 'published':
+      return '게시됨';
+    case 'draft':
+      return '임시저장';
+    case 'archived':
+      return '보관됨';
+    case 'pending':
+      return '대기중';
+    case 'rejected':
+      return '거부됨';
+    default:
+      return '';
+  }
 };
