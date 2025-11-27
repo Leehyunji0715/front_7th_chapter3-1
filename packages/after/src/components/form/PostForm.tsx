@@ -13,6 +13,9 @@ import {
 import { Input } from '../ui/input';
 import { NativeSelect, NativeSelectOption } from '../ui/native-select';
 import { Textarea } from '../ui/textarea';
+import type { Post } from '@/services/postService';
+
+export type PostFormData = z.infer<typeof formSchema>;
 
 const formSchema = z.object({
   title: z.string().min(1, '제목은 필수입니다'),
@@ -22,8 +25,8 @@ const formSchema = z.object({
 });
 
 type Props = {
-  data?: z.infer<typeof formSchema>;
-  onSubmit: (data: z.infer<typeof formSchema>) => void;
+  data?: Post;
+  onSubmit: (data: PostFormData) => void;
 };
 
 export const PostForm = ({ data, onSubmit }: Props) => {

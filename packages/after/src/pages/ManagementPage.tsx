@@ -9,7 +9,7 @@ import { StatsCard } from '@/components/card';
 import { useUser } from '@/hooks/useUser';
 import { usePosts } from '@/hooks/usePosts';
 import { UserForm } from '@/components/form/UserForm';
-import { PostForm } from '@/components/form/PostForm';
+import { PostForm, type PostFormData } from '@/components/form/PostForm';
 import '../styles/components.css';
 
 type EntityType = 'user' | 'post';
@@ -34,15 +34,12 @@ export const ManagementPage: React.FC = () => {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [formData, setFormData] = useState<any>({});
-
   useEffect(() => {
     if (entityType === 'user') {
       loadUsers();
     } else {
       loadPosts();
     }
-    setFormData({});
     setIsCreateModalOpen(false);
     setIsEditModalOpen(false);
     setSelectedItem(null);
@@ -52,7 +49,6 @@ export const ManagementPage: React.FC = () => {
     try {
       await createUser(data);
       setIsCreateModalOpen(false);
-      setFormData({});
       setAlertMessage(`사용자가 생성되었습니다`);
       setShowSuccessAlert(true);
     } catch (error: any) {
@@ -61,13 +57,18 @@ export const ManagementPage: React.FC = () => {
     }
   };
 
-  const handleCreatePost = async (
-    data: Omit<Post, 'id' | 'createdAt' | 'views' | 'status'>
-  ) => {
+  const handleCreatePost = async (data: PostFormData) => {
+    if (data.category === '') {
+      alert('카테고리를 선택해주세요');
+      throw new Error('카테고리를 선택해주세요');
+    }
     try {
-      await createPost({ ...data, status: 'draft' });
+      await createPost({
+        ...data,
+        category: data.category,
+        status: 'draft',
+      });
       setIsCreateModalOpen(false);
-      setFormData({});
       setAlertMessage(`게시글가 생성되었습니다`);
       setShowSuccessAlert(true);
     } catch (error: any) {
@@ -78,45 +79,33 @@ export const ManagementPage: React.FC = () => {
 
   const handleEdit = (item: Entity) => {
     setSelectedItem(item);
-
-    if (entityType === 'user') {
-      const user = item as User;
-      setFormData({
-        username: user.username,
-        email: user.email,
-        role: user.role,
-        status: user.status,
-      });
-    } else {
-      const post = item as Post;
-      setFormData({
-        title: post.title,
-        content: post.content,
-        author: post.author,
-        category: post.category,
-        status: post.status,
-      });
-    }
-
     setIsEditModalOpen(true);
   };
 
-  const handleUpdate = async () => {
+  const handleUpdateUser = async (data: Omit<User, 'id' | 'createdAt'>) => {
     if (!selectedItem) return;
 
     try {
-      if (entityType === 'user') {
-        await updateUser(selectedItem.id, formData as User);
-      } else {
-        await updatePost(selectedItem.id, formData as Post);
-      }
-
+      await updateUser(selectedItem.id, data as User);
       setIsEditModalOpen(false);
-      setFormData({});
       setSelectedItem(null);
-      setAlertMessage(
-        `${entityType === 'user' ? '사용자' : '게시글'}가 수정되었습니다`
-      );
+      setAlertMessage('사용자가 수정되었습니다');
+      setShowSuccessAlert(true);
+    } catch (error: any) {
+      setErrorMessage(error.message || '수정에 실패했습니다');
+      setShowErrorAlert(true);
+    }
+  };
+
+  const handleUpdatePost = async (data: PostFormData) => {
+    if (!selectedItem) return;
+
+    try {
+      const postData = { ...data, status: (selectedItem as Post).status };
+      await updatePost(selectedItem.id, postData as Post);
+      setIsEditModalOpen(false);
+      setSelectedItem(null);
+      setAlertMessage('게시글이 수정되었습니다');
       setShowSuccessAlert(true);
     } catch (error: any) {
       setErrorMessage(error.message || '수정에 실패했습니다');
@@ -327,7 +316,6 @@ export const ManagementPage: React.FC = () => {
         isOpen={isCreateModalOpen}
         onClose={() => {
           setIsCreateModalOpen(false);
-          setFormData({});
         }}
         title={`새 ${entityType === 'user' ? '사용자' : '게시글'} 만들기`}
         size='large'
@@ -337,10 +325,7 @@ export const ManagementPage: React.FC = () => {
             <Button
               variant='secondary'
               size='md'
-              onClick={() => {
-                setIsCreateModalOpen(false);
-                setFormData({});
-              }}
+              onClick={() => setIsCreateModalOpen(false)}
             >
               취소
             </Button>
@@ -367,7 +352,6 @@ export const ManagementPage: React.FC = () => {
         isOpen={isEditModalOpen}
         onClose={() => {
           setIsEditModalOpen(false);
-          setFormData({});
           setSelectedItem(null);
         }}
         title={`${entityType === 'user' ? '사용자' : '게시글'} 수정`}
@@ -380,13 +364,17 @@ export const ManagementPage: React.FC = () => {
               size='md'
               onClick={() => {
                 setIsEditModalOpen(false);
-                setFormData({});
                 setSelectedItem(null);
               }}
             >
               취소
             </Button>
-            <Button variant='primary' size='md' onClick={handleUpdate}>
+            <Button
+              variant='primary'
+              size='md'
+              type='submit'
+              form={entityType === 'user' ? 'user-form' : 'post-form'}
+            >
               수정 완료
             </Button>
           </>
@@ -402,9 +390,9 @@ export const ManagementPage: React.FC = () => {
           )}
 
           {entityType === 'user' ? (
-            <UserForm data={formData} onSubmit={handleUpdate} />
+            <UserForm data={selectedItem as User} onSubmit={handleUpdateUser} />
           ) : (
-            <PostForm data={formData} onSubmit={handleUpdate} />
+            <PostForm data={selectedItem as Post} onSubmit={handleUpdatePost} />
           )}
         </div>
       </Modal>
